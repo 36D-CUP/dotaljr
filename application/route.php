@@ -22,4 +22,6 @@
 
 use think\Route;
 
+Route::Controller('/mytp',"mytp/Index");		//后台友情链接模块
+
 Route::Controller('/admin',"admin/Index");		//后台友情链接模块
