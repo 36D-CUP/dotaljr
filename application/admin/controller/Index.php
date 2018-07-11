@@ -27,11 +27,12 @@ Class Index extends Controller
 	public function getAdminadd()
 	{
 		$id = input('id');
-		$id = input('id');
-		$id = input('id');
-		$id = input('id');
-		$id = input('id');
+		$data['row']['admin_user'] = input('admin_user');
+		$data['row']['admin_name'] = input('admin_name');
+		$data['row']['level'] 	   = input('level');
+		$data['row']['id']		   = $id;
 
+		//判定是否添加
 		if(empty($id)){
 			$arr['title_txt']  = '管理员添加';
 		}else{
@@ -41,6 +42,32 @@ Class Index extends Controller
 
 		$arr['title']	   = '管理员管理';
 		return $this->fetch('Index/adminadd',$arr);
+	}
+
+	//管理员添加与修改功能
+	public function postAdmindoadd()
+	{
+		$id 				 = input('id');
+		$data['admin_user']  = input('admin_user');
+		$data['admin_pass']  = md5(input('admin_pass'));
+		$data['admin_name']  = input('admin_name');
+		$data['level']  	 = input('level');
+
+		$files 				 = request()->file('imgs');
+		$table = 'my_admin';
+		//判断是否修改或添加
+		if(!empty($id)){
+	        $bool = Db::table($table)->where('id',$id)->update($data);			//更新数据
+
+			upload_file($files , $table , $id , 1);								//操作图片
+
+		}else{
+		    $bool = Db::table($table)->insertGetId($data);						//插入数据
+
+			upload_file($files , $table , $bool , 1);						    //操作图片
+		}
+
+		echo $bool?'1':'2';
 	}
 
 	//单击修改状态

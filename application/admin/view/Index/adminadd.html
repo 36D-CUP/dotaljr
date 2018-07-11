@@ -5,6 +5,9 @@ td a{
   color:#fff !important;
 }
 </style>
+
+<link href="/public/static/admin/css/fileinput.min.css" rel="stylesheet"><!-- 上传 -->
+<script src="/public/static/admin/js/fileinput.min.js"></script><!-- 上传 -->
 <!-- 头部开始 start-->
 <div class="page-heading">
     <h3>
@@ -21,7 +24,7 @@ td a{
 <!-- 头部结束 end-->
 <div class="wrapper" style = 'background: #fff'>
     <div class="panel-body">
-        <form class="form-horizontal adminex-form" id = 'admin_form' method="post" action = '__URLI__system/AdminDoAdd'  enctype="multipart/form-data" autocomplete="off">
+        <form class="form-horizontal adminex-form" id = 'admin_form' method="post" action = '/admin/admindoadd'  enctype="multipart/form-data" autocomplete="off">
 
             <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">图片上传</font></font></label>
@@ -33,7 +36,7 @@ td a{
             <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label "><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">管理员账号</font></font></label>
                 <div class="col-sm-10">
-                    <input type="text"  name = 'admin_name' class="form-control tooltips blurValidation" noName = 'true' thisKey = 'admin_name' thisTabel = 'yj_admin' notNull = 'true' data-trigger="hover" data-toggle="tooltip" title="" placeholder="请输入账号" verName='true' data-original-title="请输入账号" value = "{$row['admin_name']}" >
+                    <input type="text"  name = 'admin_user' class="form-control tooltips"  data-trigger="hover" data-toggle="tooltip" title="" placeholder="请输入账号" verName='true' data-original-title="请输入账号" value = "{$row['admin_user']}" >
                 </div>
             </div>
 
@@ -41,13 +44,13 @@ td a{
             <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">管理员密码</font></font></label>
                 <div class="col-sm-10">
-                    <input type="text" name= 'admin_pass' class="form-control tooltips  blurValidation" minNum = '6' placeholder="请输入密码" data-original-title="请输入昵称" value = "{$row['admin_pass']}">
+                    <input type="text" name= 'admin_pass' class="form-control tooltips "  placeholder="请输入密码" data-original-title="请输入昵称" value = "{$row['admin_pass']}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">昵称</font></label>
                 <div class="col-sm-10">
-                    <input type="text" name = 'name'  notNull ='true' class="form-control tooltips blurValidation" data-trigger="hover" data-toggle="tooltip" title="" placeholder="请输入昵称" data-original-title="请输入昵称" value = "{$row['name']}">
+                    <input type="text" name = 'admin_name'  notNull ='true' class="form-control tooltips" data-trigger="hover" data-toggle="tooltip" title="" placeholder="请输入昵称" data-original-title="请输入昵称" value = "{$row['admin_name']}">
                 </div>
             </div>
 
@@ -61,7 +64,9 @@ td a{
                     </select>
                 </div>
             </div>
-                      <input type="hidden" name = 'id' value="{$row['id']}">
+            
+
+            <input type="hidden" name = 'id' value="{$row['id']}">
 
             <div class="form-group">
                 <label class="col-sm-2 col-sm-2 control-label"></label>
@@ -73,4 +78,22 @@ td a{
     </div>
 
 </div>
+<script>
+    $("#file-0a").fileinput({
+        allowedFileExtensions : ['jpg', 'png','gif'],
+        overwriteInitial: false,
+        showUpload:false,
+        maxFileSize: 5000,
+        showUpload:false, 
+        browseClass:"btn btn-success",
+        maxFilesNum: 1,
+        
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function(filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+
+    
+</script>
 {/block}
