@@ -54,16 +54,18 @@ use think\Db;
     		$old_img  = DB::table('my_img')->where($old_data)->select();    				 		  //找出原图片
 
     		//删除所有图片,数据
-    		foreach ($old_img as $v) {
-	        	@unlink(ROOT_PATH . 'public' . DS . 'uploads' . DS . $table . DS . $v['img_path']);	  //删除原图片
-    	    	Db::table($table)->where($old_data)->delete();									      //删除所有条件数据
+    		if(!empty($old_img)){
+	    	    Db::table('my_img')->where($old_data)->delete();  									      //删除所有条件数据
+	    		foreach ($old_img as $v) {
+		        	@unlink(ROOT_PATH . 'public' . DS . 'uploads' . DS . $table . DS . $v['img_path']);	  //删除原图片
+	    		}
     		}
 
         	//插入新图片
 			foreach($files as $file){
     			$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . $table);			  //移动图片到指定目录
 
-	        	$data_img['img_path']         = $info->getSaveName();								  //获取路径,组合条件
+	        	$data_img['img_path']         = str_replace('\\','/',$info->getSaveName());			  //获取路径,组合条件
 	        	$data_img['img_surface_name'] = $table;
     			$data_img['img_surface_id']   = $id;														
 
@@ -80,6 +82,50 @@ use think\Db;
 
 	}
 
+
+	//删除文件
+	/*
+		delete_file(对应表 , 对应表id , 指定图片img_path字段);
+
+		table  		对应的数据表
+		id     		对应数据表数据的id
+		img_path    指定图片的img_path字段
+						存在	:删除所有图片
+						不存在  :删除指定图片
+	 */	
+	function delete_file($table , $id , $img_path="")
+	{
+		//判断是否有图片;
+		$old_data['img_surface_name'] = $table;
+		$old_data['img_surface_id']   = $id;
+		$old_img  = DB::table('my_img')->where($old_data)->select();    				 		  //找出原图片
+		if(empty($old_img)){
+			return false;
+		}
+
+		//判断是否删除原图片
+    	if(empty($img_path)){
+    		//删除所有图片,数据
+    	    $bool = Db::table('my_img')->where($old_data)->delete();  								  //删除所有条件数据
+    		foreach ($old_img as $v) {
+	        	@unlink(ROOT_PATH . 'public' . DS . 'uploads' . DS . $table . DS . $v['img_path']);	  //删除原图片
+    		}
+
+        	if($bool){
+        		return true;
+        	}
+		}else{
+			$old_data['img_path'] = $img_path;
+			$old_path = DB::table('my_img')->where($old_data)->find()['img_path'];
+    	    $bool 	  = Db::table('my_img')->where($old_data)->delete();  							  //删除指定条件数据
+	        @unlink(ROOT_PATH . 'public' . DS . 'uploads' . DS . $table . DS . $old_path);	 	  	  //删除原图片
+
+        	if($bool){
+        		return true;
+        	}
+		}
+
+	}
 
 
 //----------------------------------------------------基础操作 end-----------------------------------
