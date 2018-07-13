@@ -4,16 +4,10 @@ namespace app\admin\controller;
 use app\admin\controller\Allow;
 use think\Db;
 
-Class Index extends Allow
+Class Article extends Allow
 {
-	//首页
-	public function getIndex()
-	{
-		return $this->fetch('Index/index');
-	}
-
-	//管理员列表
-	public function getAdminList()
+	//文章列表
+	public function getArticle()
 	{
 		//分页
 		$pro = input('pro')==""?1:input('pro');							//获取分页传过来的当前页
@@ -25,27 +19,54 @@ Class Index extends Allow
 		$s_si   = input('search_size');									//判断是否搜索大小写
 		$s_type = $s_val?input('type'):'其他';							//获取搜索传过来的搜索类型
 
-		$table = 'my_admin';
+		$table = 'my_article';
 		switch($s_type){
+			//普通搜索
 			case 1:
 				$num  = Db::table($table)->where($s_ty,'like',"%".$s_val."%")->count();							//数量
 				$data = Db::table($table)->where($s_ty,'like',"%".$s_val."%")->limit($str)->select();			//获取所有管理员
 			break;
+
+			//时间格式搜索
+			case 2:
+				//获取此天的时间区
+				$s_val = explode(' ', $s_val);
+				$start = strtotime($s_val[0].' 00:00:00');
+				$end   = strtotime($s_val[0].' 23:59:59');
+
+				$num  = DB::table($table)->where($s_ty,'between',[$start,$end])->count();
+				$data = DB::table($table)->where($s_ty,'between',[$start,$end])->limit($str)->select();
+			break;
+
+			//默认列表
 			default:
-				$num  = Db::table($table)->count();												//数量
-				$data = Db::table($table)->limit($str)->select();								//获取所有管理员
+				$num  = Db::table($table)->count();
+				$data = Db::table($table)->limit($str)->select();
 			break;
 		}
 
-		//组合用户图片
-		$img  = Db::table('my_img')->where('img_surface_name',$table)->select();		//获取所有管理员图片
+
+		//组合数据
+		$img  = Db::table('my_img')->where('img_surface_name',$table)->select();								//获取所有文章缩略图片
 		for($i = 0 ; $i<count($data) ; $i++){
+			$ico  = Db::table('my_article_ico_c')->where('aid',$data[$i]['id'])->select();						//获取此文章所有标签
+
+			//组合标签
+			for($o = 0 ; $o<count($ico) ; $o++){
+				$data[$i]['ico'][] = Db::table('my_article_ico')->where('id',$ico[$o]['iid'])->find()['name'];
+			}
+
+			//组合图片
 			for($k = 0 ; $k<count($img) ; $k++){
 				if($data[$i]['id'] == $img[$k]['img_surface_id']){
 					$data[$i]['img'] = $this->imgPath.$img[$k]['img_surface_name'].DS.$img[$k]['img_path'];
 				}
 			}
+
+			//整理时间
+			$data[$i]['start_time'] = date('Y-m-d H:i:s',$data[$i]['start_time']);
 		}
+
 
 		//分页
 		$arr['page'] = ceil($num/$showNum);//获取条数
@@ -53,26 +74,28 @@ Class Index extends Allow
 		$arr['row']        = $data;																			//列表数据
 		$arr['s_ty']       = $s_ty;																			//搜索保留值
 		$arr['s_val']      = $s_val;																		//搜索保留值
-		$arr['data_num']   = $showNum;																		//搜索保留值
-		$arr['table']      = $table;																	//模板上使用
-		$arr['tables']     = 'admin';																		//模板上使用
-		$arr['empty']      = "<tr><td colspan='6' style='text-align:center'>没有任何数据</td></tr>";		//显示条数
-		$arr['title']	   = '管理员管理';
-		$arr['title_txt']  = '管理员列表';
-		return $this->fetch('Index/adminlist',$arr);
+		$arr['data_num']   = $showNum;																		//显示条数保留值
+		$arr['table']      = $table;																		//模板上使用
+		$arr['tables']     = 'article';																		//模板上使用
+		$arr['empty']      = "<tr><td colspan='6' style='text-align:center'>没有任何数据</td></tr>";		//为空时显示
+		$arr['title']	   = '文章管理';
+		$arr['title_txt']  = '文章列表';
+
+		return $this->fetch('Article/article',$arr);
 	}
 
+
 	//管理员添加与修改页
-	public function getAdminadd()
+	public function getArticleadd()
 	{
 		$id = input('id');
 
 		//判定是否添加
-		$table = 'my_admin';
+		$table = 'my_article';
 		if(empty($id)){
-			$arr['title_txt']  = '管理员添加';
+			$arr['title_txt']  = '文章添加';
 		}else{
-			$arr['title_txt']  = '管理员修改';
+			$arr['title_txt']  = '文章修改';
 			$arr['row']        = Db::table($table)->where('id',$id)->find();		//找出用户
 
 			$old_img['img_surface_name'] = $table;										//组合图片条件
@@ -83,26 +106,38 @@ Class Index extends Allow
 				$arr['row']['img'] = $this->imgPath.$img['img_surface_name'].DS.$img['img_path'];
 			}
 		}
-		
-		$arr['table']      = 'my_admin';																	//模板上使用
-		$arr['tables']     = 'admin';																		//模板上使用
-		$arr['title']	   = '管理员管理';
-		return $this->fetch('Index/adminadd',$arr);
+
+		if(!enpty($id)){
+			$ico = Db::table('my_article_ico_c')->where('id',$id)->select();
+
+			for($i = 0 ; $i<count($ico) ; $i++){
+				$arr['row']['ico'][] == $ico[$i]['iid'];
+			}
+		}
+
+		//获取所有标签
+		$arr['ico']        = Db::table('my_article_ico')->order('sort desc')->select();
+
+
+		$arr['table']      = 'my_article';																	//模板上使用
+		$arr['tables']     = 'article';																		//模板上使用
+		$arr['title']	   = '文章管理';
+		return $this->fetch('article/articleadd',$arr);
 	}
 
 	//管理员添加与修改功能
-	public function postAdmindoadd()
+	public function postArticledoadd()
 	{
 		$id 				 = input('id');
-		$data['admin_user']  = input('admin_user');
-		$data['admin_name']  = input('admin_name');
-		$data['level']  	 = input('level');
-		if(empty(input('admin_pass'))){
-			$data['admin_pass']  = md5(input('admin_pass'));
-		}
+		$data['title']       = input('title');
+		$data['brief']   	 = input('brief');
+		$data['uid']  	  	 = 1;
+		$data['content']  	 = input('content');
+		$data['start_time']  = time();
+
 
 		$files 				 = request()->file('imgs');
-		$table 				 = 'my_admin';
+		$table 				 = 'my_article';
 
 		//判断是否修改或添加
 		if(!empty($id)){

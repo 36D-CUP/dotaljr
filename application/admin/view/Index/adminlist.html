@@ -26,20 +26,22 @@ td a{
     <div class="space15"></div> 
     <div id="editable-sample_wrapper" class="dataTables_wrapper form-inline" role="grid">
      <div class="row">
-      <div class="col-lg-3" style = 'float:left'>
-            <select class="selectpicker form-control" id = 'data_num' style = 'width: 80px;padding:0px !important;cursor:pointer;float:left;'>
-              <option value="5"  {if condition="($data_num==5)"}selected{/if}>5</option>
-              <option value="10"  {if condition="($data_num==10)"}selected{/if}>10</option>
-              <option value="15" {if condition="($data_num==15)"}selected{/if}>15</option>
-              <option value="20" {if condition="($data_num==20)"}selected{/if}>20</option>
-            </select>
-            <p style = 'line-height: 35px;margin'>
-              显示条数
-            </p>
-      </div>
+     <!-- 显示条数 start -->
+        <div class="col-lg-3" style = 'float:left'>
+              <select class="selectpicker form-control" id = 'data_num' style = 'width: 80px;padding:0px !important;cursor:pointer;float:left;'>
+                <option value="5"  {if condition="($data_num==5)"}selected{/if}>5</option>
+                <option value="10"  {if condition="($data_num==10)"}selected{/if}>10</option>
+                <option value="15" {if condition="($data_num==15)"}selected{/if}>15</option>
+                <option value="20" {if condition="($data_num==20)"}selected{/if}>20</option>
+              </select>
+              <p style = 'line-height: 35px;margin'>
+                显示条数
+              </p>
+        </div>
+     <!-- 显示条数 end -->
      <!--左侧搜索 start-->
       <div class="col-lg-3" style='float:right;margin-bottom: 10px;'>
-        <form action = '/admin/adminlist' method="get">
+        <form action = '' method="get">
           <div class="">
             <select class="selectpicker form-control" name = 'search_type' style = 'width: 80px;padding:0px !important;cursor:pointer'>
               <option value = 'id'          {if condition="($s_ty == 'id')"}         selected{/if}> 系统Id     </option>
@@ -60,8 +62,8 @@ td a{
       <thead> 
        <tr role="row">
         <th class="sorting" role="columnheader" style = 'width:220px'>头像</th>
-        <th class="sorting" role="columnheader">管理员昵称</th>
         <th class="sorting" role="columnheader">管理员账号</th>
+        <th class="sorting" role="columnheader">管理员昵称(双击修改)</th>
         <th class="sorting" role="columnheader">等级</th>
         <th class="sorting" role="columnheader">状态</th>
         <th class="sorting" role="columnheader">操作</th>
@@ -72,7 +74,7 @@ td a{
        <tr> 
         <td><img  style = 'width:200px;'src = "{$rows['img']}"></td> 
         <td>{$rows['admin_user']}</td> 
-        <td class = 'double_updata_txt' tableName='admin_name' thisID="{$rows['id']}" clickTable = 'my_admin' clickRes = '/admin/double_updata_txt'>{$rows['admin_name']}</td> 
+        <td class = 'double_updata_txt' tableName='admin_name' thisID="{$rows['id']}" clickTable = '{$table}' clickRes = '/{$tables}/double_updata_txt'>{$rows['admin_name']}</td> 
         <td>
           {switch name="rows.level"}
               {case value="1"}A级管理员{/case}
@@ -82,7 +84,7 @@ td a{
           {/switch}
         </td> 
         <td>
-            <a href="#" class = "click_updata_status btn {if condition='($rows.status==1)'}btn-success{else}btn-primary{/if} btn-sm" clickStatusKey ='status' thisID = "{$rows['id']}" clickTable = 'my_admin'  clickRes = '/admin/click_updata_status' clickStatus="{$rows['status']}" style ='color:#fff'>
+            <a href="#" class = "click_updata_status btn {if condition='($rows.status==1)'}btn-success{else}btn-primary{/if} btn-sm" clickStatusKey ='status' thisID = "{$rows['id']}" clickTable = '{$table}'  clickRes = '/{$tables}/click_updata_status' clickStatus="{$rows['status']}" style ='color:#fff'>
           {if condition="($rows['status']==1)"}
             启用
           {else}
@@ -92,8 +94,8 @@ td a{
             
         </td> 
         <td>
-          <a  href="/admin/adminadd/id/{$rows['id']}"  class = 'btn btn-success btn-sm'>编辑</a>
-          <a href="javascript:;" class = 'btn btn-warning btn-sm click_delete' thisID="{$rows['id']}" clickRes = '/admin/Click_delete' clickTable = 'my_admin'>删除</a>
+          <a  href="/{$tables}/{$tables}add/id/{$rows['id']}"  class = 'btn btn-success btn-sm'>编辑</a>
+          <a href="javascript:;" class = 'btn btn-warning btn-sm click_delete' thisID="{$rows['id']}" clickRes = '/{$tables}/Click_delete' clickTable = '{$table}'>删除</a>
         </td> 
        </tr>
        {/volist}
@@ -123,8 +125,7 @@ td a{
   </div>
 </div>
 
-</div>{$Request.param.id}
-
+</div>
 <script>
 
 // 分页
@@ -133,13 +134,12 @@ $("#page").on('click','li',function(){
   var search_type = "{$Request.param.search_type}";
   var search_value = "{$Request.param.search_value}";
   var type = "{$Request.param.type}";         //通过自定义函数getUrlParam(key);获取地址栏的参数
-  window.location.href='/admin/adminlist?pro='+pro+'&search_type='+search_type+'&search_value='+search_value+'&type='+type;
-  // window.location.href='__URLI__ico/ico/pro/'+pro;
+  window.location.href='/{$tables}/{$tables}list?pro='+pro+'&search_type='+search_type+'&search_value='+search_value+'&type='+type;
 });
 
 //显示条数
 $('#data_num').change(function(){
-  window.location.href="/admin/adminlist/data_num/"+$(this).val();
+  window.location.href="/{$tables}/{$tables}list/data_num/"+$(this).val();
 });
 </script>
 {/block}
