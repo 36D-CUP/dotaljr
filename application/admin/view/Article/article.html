@@ -72,6 +72,7 @@ td a{
               <option value = 'id'          {if condition="($s_ty == 'id')"}    selected{/if}> 系统Id     </option>
               <option value = 'title'       {if condition="($s_ty == 'title')"} selected{/if}> 文章标题 </option>
               <option value = 'brief'       {if condition="($s_ty == 'brief')"} selected{/if}> 文章简略       </option>
+              <option value = 'ico'         {if condition="($s_ty == 'ico')"}   selected{/if}> 标签       </option>
               <option value = 'top'         {if condition="($s_ty == 'top')"}   selected{/if}> 置顶(1正常,2置顶)</option>
             </select>
             <input type="text" name = 'search_value' value = '{$s_val}' class = 'form-control' style = 'width: 200px;'>

@@ -23,8 +23,33 @@ Class Article extends Allow
 		switch($s_type){
 			//普通搜索
 			case 1:
-				$num  = Db::table($table)->where($s_ty,'like',"%".$s_val."%")->count();							//数量
-				$data = Db::table($table)->where($s_ty,'like',"%".$s_val."%")->limit($str)->select();			//获取所有管理员
+				if($s_ty == 'ico'){
+					$ico = Db::table('my_article_ico')->where('name','like',"%".$s_val."%")->select();					//获取所有标签
+
+					//组合查询标签条件
+					$t = array();
+					for($k = 0 ; $k<count($ico) ; $k++){
+						$t[] = $ico[$k]['id'];
+					}
+					$ico = implode(',',$t);
+
+					$icos = Db::table('my_article_ico_c')->where('iid','in',$ico)->select();							//查询出文章id
+
+					//组合查询文章条件
+					$ico_in = array();
+					for($i = 0 ; $i<count($icos) ; $i++){
+						$ico_in[] = $icos[$i]['aid'];
+					}
+					$ini = implode(',',$ico_in);
+
+	
+					$num  = Db::table($table)->where('id','in',$ini)->count();										//数量
+					$data = Db::table($table)->where('id','in',$ini)->limit($str)->select();						//获取所有文章
+				}else{
+					$num  = Db::table($table)->where($s_ty,'like',"%".$s_val."%")->count();							//数量
+					$data = Db::table($table)->where($s_ty,'like',"%".$s_val."%")->limit($str)->select();			//获取所有文章
+				}
+
 			break;
 
 			//时间格式搜索
@@ -77,7 +102,7 @@ Class Article extends Allow
 		$arr['data_num']   = $showNum;																		//显示条数保留值
 		$arr['table']      = $table;																		//模板上使用
 		$arr['tables']     = 'article';																		//模板上使用
-		$arr['empty']      = "<tr><td colspan='6' style='text-align:center'>没有任何数据</td></tr>";		//为空时显示
+		$arr['empty']      = "<tr><td colspan='8' style='text-align:center'>没有任何数据</td></tr>";		//为空时显示
 		$arr['title']	   = '文章管理';
 		$arr['title_txt']  = '文章列表';
 
@@ -106,18 +131,18 @@ Class Article extends Allow
 				$arr['row']['img'] = $this->imgPath.$img['img_surface_name'].DS.$img['img_path'];
 			}
 		}
-
-		if(!enpty($id)){
-			$ico = Db::table('my_article_ico_c')->where('id',$id)->select();
+		
+		$arr['row']['ico'] = array();
+		if(!empty($id)){
+			$ico = Db::table('my_article_ico_c')->where('aid',$id)->select();
 
 			for($i = 0 ; $i<count($ico) ; $i++){
-				$arr['row']['ico'][] == $ico[$i]['iid'];
+				$arr['row']['ico'][] = $ico[$i]['iid'];
 			}
 		}
 
 		//获取所有标签
 		$arr['ico']        = Db::table('my_article_ico')->order('sort desc')->select();
-
 
 		$arr['table']      = 'my_article';																	//模板上使用
 		$arr['tables']     = 'article';																		//模板上使用
@@ -134,19 +159,36 @@ Class Article extends Allow
 		$data['uid']  	  	 = 1;
 		$data['content']  	 = input('content');
 		$data['start_time']  = time();
+		$ico   	 		     = input()['ico'];
 
 
 		$files 				 = request()->file('imgs');
 		$table 				 = 'my_article';
-
 		//判断是否修改或添加
 		if(!empty($id)){
+			Db::table('my_article_ico_c')->where('aid',$id)->delete();			//删除所有原标签
+
+			//插入标签
+			$icos['aid'] = $id;
+			for($i = 0 ; $i<count($ico) ; $i++){
+				$icos['iid'] = $ico[$i];
+				Db::table('my_article_ico_c')->insert($icos);
+			}
+
 	        $bool = Db::table($table)->where('id',$id)->update($data);			//更新数据
 
 			upload_file($files , $table , $id , 1);								//操作图片
 
 		}else{
 		    $bool = Db::table($table)->insertGetId($data);						//插入数据
+
+			//插入标签
+			$icos['aid'] = $bool;
+			for($i = 0 ; $i<count($ico) ; $i++){
+				$icos['iid'] = $ico[$i];
+				Db::table('my_article_ico_c')->insert($icos);
+			}
+
 
 			upload_file($files , $table , $bool , 1);						    //操作图片
 		}
@@ -172,6 +214,7 @@ Class Article extends Allow
 		$id    = input('id');					//id
 		$table = input('table');				//表名
 
+		Db::table('my_article_ico_c')->where('aid',$id)->delete();
 		//删除图片
 		delete_file($table , $id);
 		//删除数据
