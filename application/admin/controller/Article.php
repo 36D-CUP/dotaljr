@@ -121,17 +121,18 @@ Class Article extends Allow
 			$arr['title_txt']  = '文章添加';
 		}else{
 			$arr['title_txt']  = '文章修改';
-			$arr['row']        = Db::table($table)->where('id',$id)->find();		//找出用户
+			$arr['row']        = Db::table($table)->where('id',$id)->find();			//找出用户
 
 			$old_img['img_surface_name'] = $table;										//组合图片条件
 			$old_img['img_surface_id']   = $id;
-			$img = Db::table('my_img')->where($old_img)->find();  					//查找图片
+			$img = Db::table('my_img')->where($old_img)->find();  						//查找图片
 
 			if(!empty($img)){
 				$arr['row']['img'] = $this->imgPath.$img['img_surface_name'].DS.$img['img_path'];
 			}
 		}
 		
+		//判断已有标签
 		$arr['row']['ico'] = array();
 		if(!empty($id)){
 			$ico = Db::table('my_article_ico_c')->where('aid',$id)->select();
