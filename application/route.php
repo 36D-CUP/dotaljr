@@ -28,3 +28,5 @@ Route::Controller('/admin',"admin/Index");			//后台管理员,主页
 Route::Controller('/article',"admin/Article");		//后台文章
 
 Route::Controller('/articleico',"admin/Articleico");		//后台文章
+
+Route::Controller('/index',"index/Index");		//前台首页

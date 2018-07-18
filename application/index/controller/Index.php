@@ -1,10 +1,36 @@
 <?php
 namespace app\index\controller;
 
-class Index
+use app\index\controller\Allow;
+use think\Db;
+class Index extends Allow
 {
-    public function index()
+    public function getIndex()
     {
-        return '<style type="text/css">*{ padding: 0; margin: 0; } .think_default_text{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:)</h1><p> ThinkPHP V5<br/><span style="font-size:30px">十年磨一剑 - 为API开发设计的高性能框架</span></p><span style="font-size:22px;">[ V5.0 版本由 <a href="http://www.qiniu.com" target="qiniu">七牛云</a> 独家赞助发布 ]</span></div><script type="text/javascript" src="https://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script><script type="text/javascript" src="https://e.topthink.com/Public/static/client.js"></script><think id="ad_bd568ce7058a1091"></think>';
+    	$table = 'my_article';
+    	$data = Db::table('my_article')->where('status','1')->select();
+
+		//组合数据
+		$img  = Db::table('my_img')->where('img_surface_name',$table)->select();								//获取所有文章缩略图片
+		for($i = 0 ; $i<count($data) ; $i++){
+			$ico  = Db::table('my_article_ico_c')->where('aid',$data[$i]['id'])->select();						//获取此文章所有标签
+
+			//组合标签
+			for($o = 0 ; $o<count($ico) ; $o++){
+				$data[$i]['ico'][] = Db::table('my_article_ico')->where('id',$ico[$o]['iid'])->find()['name'];
+			}
+
+			//组合图片
+			for($k = 0 ; $k<count($img) ; $k++){
+				if($data[$i]['id'] == $img[$k]['img_surface_id']){
+					$data[$i]['img'] = $this->imgPath.$img[$k]['img_surface_name'].DS.$img[$k]['img_path'];
+				}
+			}
+
+			//整理时间
+			$data[$i]['start_time'] = date('Y-m-d H:i:s',$data[$i]['start_time']);
+		}
+		$row['list'] = $data;
+        return $this->fetch('Index/index',$row);
     }
 }

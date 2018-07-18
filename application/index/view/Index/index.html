@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name = 'viewport' content='width=device-width, initial-scale=1.0'>
-	<link rel="stylesheet" href="./public/css/bootstrap.css">
-	<link rel="stylesheet" href="./public/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/public/static/index/css/bootstrap.css">
+	<link rel="stylesheet" href="/public/static/index/css/font-awesome.min.css">
 	<title>博客</title>
 	<style>
 		body{
@@ -17,7 +17,7 @@
 		  min-height: 50px;
 		  margin-bottom: 1px;
 		  background-color:#f38484; 
-		  background-image: url("../App_Themes/header.jpg");
+		  /*background-image: url("../App_Themes/header.jpg");*/
 		  border: 0px solid transparent !important;
 		  
 		}
@@ -53,19 +53,68 @@
 		.dropdown-menu a{
 			color:#fff;
 		}
+		/*列表*/
 		.my-width{
-			padding:10px 15px;
+			padding:5px 15px;
 		}
 		.x-list{
-			height:200px;
 			padding: 10px;
 			background-color: #fff;
 		}
 		.x-list-c{
-			height:180px;
-			padding: 10px;
-			background-color: #FFE4B5;
 		}
+		.list-head{
+			line-height: 40px;
+			min-height: 40px;
+		}
+		.list-head-ico{
+			font-size:16px;
+			padding:2px 10px;
+			color:#fcfff4;
+			border-radius:2px;
+			background-color: #d9534f;
+		}
+		.list-head a{
+			color:#00a67c;
+			margin-left: 20px;
+			font-size: 20px;
+		}
+		.list-body{
+			height: 150px;
+		}
+		.list-body-left{
+			padding:10px;
+			display: block;
+			width: 220px;
+			height: 150px;
+			float:left;
+		}
+		.list-body-right{
+			padding:10px;
+		}
+		.list-body-left img{
+			height:100%;
+			width:100%;
+		}
+		.list-bottom{
+			height:35px;
+			line-height: 35px;
+		}
+		.list-bottom-div{
+
+			display: block;
+			float:right;
+			margin-right: 20px;
+		}
+		.list-bottom-div span{
+			color:#00a67c;
+			
+		}
+		.list-bottom a{
+			cursor:pointer;
+			text-decoration:none !important;
+		}
+		/*列表*/
 	</style>
 </head>
 <body>
@@ -154,15 +203,15 @@
 					    <!-- 轮播（Carousel）项目 -->
 					    <div class="carousel-inner">
 					        <div class="item active">
-					            <img src="./public/images/1.jpg" alt="First slide">
+					            <img src="/public/static/index/images/1.jpg" alt="First slide">
 					            <div class="carousel-caption">标题 1</div>
 					        </div>
 					        <div class="item">
-					            <img src="./public/images/2.jpg" alt="Second slide">
+					            <img src="/public/static/index/images/2.jpg" alt="Second slide">
 					            <div class="carousel-caption">标题 2</div>
 					        </div>
 					        <div class="item">
-					            <img src="./public/images/3.jpg" alt="Third slide">
+					            <img src="/public/static/index/images/3.jpg" alt="Third slide">
 					            <div class="carousel-caption">标题 3</div>
 					        </div>
 					    </div>
@@ -184,37 +233,54 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="row" >
-				<div class="col-sm-12 my-width" >
-					<div class = 'x-list'>
-						<div class="x-list-c"></div>
+			{volist name='list' id='lists'}
+				<div class="row" >
+					<div class="col-sm-12 my-width" >
+						<div class = 'x-list'>
+							<div class="x-list-c">
+								<div class = 'list-head'>
+									<span class = 'list-head-ico'>最新</span>
+									<a href="#">
+										{$lists['title']}
+									</a>
+								</div>
+								<div class = 'list-body'>
+									<div class="list-body-left">
+										<img src="{$lists['img']}" alt="" class = 'img-responsive'>
+									</div>
+									<div class="list-body-right">
+										{$lists['brief']}
+									</div>
+								</div>
+								<div class="list-bottom">
+									<a  class = 'list-bottom-div'>
+										<span class = 'glyphicon glyphicon-heart' style = 'color:pink'></span>
+										<span style = 'color:pink'>29喜欢</span>
+									<a>
+									<a  class = 'list-bottom-div'>
+										<span class = 'glyphicon glyphicon-time' ></span>
+										<span>2018-07-18</span>
+									<a>
+									<a  class = 'list-bottom-div'>
+										<span class = 'glyphicon glyphicon-eye-open' ></span>
+										<span>20浏览</span>
+									<a>
+									<a  class = 'list-bottom-div'>
+										<span class = 'glyphicon glyphicon-comment' ></span>
+										<span>20评论</span>
+									<a>
+									<a  class = 'list-bottom-div'>
+										<span class = 'glyphicon glyphicon-user' ></span>
+										<span>萌小怪</span>
+									<a>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row" >
-				<div class="col-sm-12 my-width" >
-					<div class = 'x-list'>
-						<div class="x-list-c"></div>
-					</div>
-				</div>
-			</div>
-			<div class="row" >
-				<div class="col-sm-12 my-width" >
-					<div class = 'x-list'>
-						<div class="x-list-c"></div>
-					</div>
-				</div>
-			</div>
-			<div class="row" >
-				<div class="col-sm-12 my-width" >
-					<div class = 'x-list'>
-						<div class="x-list-c"></div>
-					</div>
-				</div>
-			</div>
+			{/volist}
 		</div>
-		<div class="col-sm-3 col-xs-12" style = ''>
+		<div class="col-sm-3 col-xs-12" >
 			<div class="row">
 				<div class="col-sm-12 col-xs-0" style = 'height:50px;background-color: red;'>
 					
@@ -241,7 +307,7 @@
 </div>
 </body>
 <script src = 'https://code.jquery.com/jquery.js'></script>
-<script src = './public/js/bootstrap.min.js'></script>
+<script src = '/public/static/index/js/bootstrap.min.js'></script>
 <script>
 </script>
 </html>
