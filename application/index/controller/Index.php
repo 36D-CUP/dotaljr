@@ -8,11 +8,17 @@ class Index extends Allow
     public function getIndex()
     {
     	$table = 'my_article';
-    	$data = Db::table('my_article')->where('status','1')->select();
+    	$data = Db::table('my_article')->order('start_time desc')->where('status','1')->select();
 
+    	$hot = array();		//置顶数据
 		//组合数据
 		$img  = Db::table('my_img')->where('img_surface_name',$table)->select();								//获取所有文章缩略图片
 		for($i = 0 ; $i<count($data) ; $i++){
+			//置顶数据
+			if($data[$i]['top'] == '1'){
+				$hot[] = $data[$i];
+			}
+
 			$ico  = Db::table('my_article_ico_c')->where('aid',$data[$i]['id'])->select();						//获取此文章所有标签
 
 			//组合标签
@@ -28,8 +34,9 @@ class Index extends Allow
 			}
 
 			//整理时间
-			$data[$i]['start_time'] = date('Y-m-d H:i:s',$data[$i]['start_time']);
+			$data[$i]['start_time'] = date('Y-m-d',$data[$i]['start_time']);
 		}
+		$row['hot'] = $hot;
 		$row['list'] = $data;
         return $this->fetch('Index/index',$row);
     }

@@ -11,6 +11,18 @@
 			background-color: #f0f0f0;
 			color:#666;
 		}
+		.head{
+			height:100px;width: 100%;background: #FFF5EE;
+			line-height: 100px;
+			text-align:center;
+		}
+
+		.login{
+			color:#f38484;float:right;margin-left:10px;
+		}
+		.login:hover{
+			color:#f38484;
+		}
 
 		.navbar {
 		  position: relative;
@@ -55,6 +67,7 @@
 		}
 		/*列表*/
 		.my-width{
+			margin-top:5px; 
 			padding:5px 15px;
 		}
 		.x-list{
@@ -90,21 +103,29 @@
 			float:left;
 		}
 		.list-body-right{
-			padding:10px;
+			font-size: 16px;
+			padding:10px 10px 0px 240px;
+		}
+		.list-body-left-img{
+			height:100%;
+			width:100%;
+			overflow:hidden;
+			position:relative;
 		}
 		.list-body-left img{
 			height:100%;
 			width:100%;
+			position:absolute; left:0; top:0;
 		}
 		.list-bottom{
-			height:35px;
-			line-height: 35px;
+			min-height:20px;
+			line-height: 20px;
 		}
 		.list-bottom-div{
 
 			display: block;
 			float:right;
-			margin-right: 20px;
+			margin-right: 19px;
 		}
 		.list-bottom-div span{
 			color:#00a67c;
@@ -115,11 +136,92 @@
 			text-decoration:none !important;
 		}
 		/*列表*/
+		/*热贴*/
+		.my-hot-width{
+			margin-top:5px; 
+			padding:5px 15px;
+		}
+		.my-hot-width>div{
+			height: 250px;
+			padding:5px 15px;
+			background-color: #fff;
+		}
+
+		.hot-head{
+			height:40px;
+			line-height: 40px;
+			padding-left: 10px;
+			border-bottom: 1px solid #00a67c;
+			color:#00a67c;
+			font-size:16px;
+		}
+		.hot-body ul{
+			padding: 0;
+			margin-top:15px;
+		}
+		.hot-body li{
+			padding:5px; 
+			display: block;
+			height: 35px;
+			line-height: 35px;
+			list-style:none;
+		}
+		.hot-body li>span{
+			display: block;
+			float:left;
+			background-color: pink;
+			line-height: 25px;
+			text-align: center;
+			color:#f5f5f5;
+			width:25px;
+			height:25px;
+		}
+		.hot-body li .hot-title{
+			float:left;
+			line-height: 25px;
+			margin-left: 10px;
+			font-size: 16px;
+			color:#00a67c;
+		}
+		.hot-body li .hot-love{
+			cursor:pointer;
+			float:right;
+			line-height: 25px;
+			font-size: 16px;
+		}
+		/*热贴*/
+		/*图标*/
+		.iphone-code{
+			height:70px;background-color: #fff;
+			padding-top: 10px;
+		}
+		.iphone-code i{
+			line-height: 50px;
+			text-align: center;
+			width:50px;
+			height:50px;
+			border-radius:5px;
+			background-color: #6fc299;
+			color: #fff;
+			font-size:40px;
+			cursor:pointer;
+			margin-left: 10px;
+		}
+		/*图标*/
+		.bottom{
+			height:100px;width:100%;;border-top:3px solid #f38484;background:#333;color:#ccc;text-align:center;line-height:100px;
+		}
+		body{
+			min-width: 500px;
+		}
 	</style>
 </head>
 <body>
-<div style = 'height:100px;width: 100%;background: #FFF5EE'></div>
-<nav class="navbar navbar-default">
+<div class = 'head'>
+	萌小怪个人博客
+
+</div>
+<nav class="navbar navbar-default" style = ''>
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -152,25 +254,7 @@
         </li>
         <li><a href="#">个人简历</a></li>
       </ul>
-<!--       <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form> -->
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
@@ -182,8 +266,8 @@
 			<span style = 'margin-left: 10px;'>网站还在装修中,敬请期待~~~~~~~~~~~~</span>
 		</div>
 		<div class="col-sm-2">
-			<a href="#" style = 'color:#f38484;float:right;margin-left:10px;'><span class = 'glyphicon glyphicon-user' style = 'margin-right:3px '></span>注册</a>
-			<a href="#" style = 'color:#f38484;float:right'><span class = 'glyphicon glyphicon-off' style = 'margin-right:3px '></span>登录</a>
+			<a href="#" class="login"><span class = 'glyphicon glyphicon-user' style = 'margin-right:3px '></span>注册</a>
+			<a href="#" class='login'><span class = 'glyphicon glyphicon-off' style = 'margin-right:3px '></span>登录</a>
 		</div>
 	</div>
 </div>
@@ -228,8 +312,35 @@
 				</div>
 			</div>
 			<div class="row" >
-				<div class="col-sm-12 my-width" >
-					<div style = 'height:250px;background-color: pink'>
+				<div class="col-sm-12 my-hot-width" >
+					<div >
+						<div class = 'hot-head'>
+							热门排行
+						</div>
+						<div class = 'hot-body'>
+							<ul>
+								{volist name='hot' id='hots'  key='k'}
+									<li>
+										<span style = '{if condition="($k == 2)"}
+															background:#00a66c;	
+														{elseif condition="($k==3)"}
+															background:#89c;	
+														{elseif condition="($k==4)"}
+															background:#999;	
+														{elseif condition="($k==5)"}
+															background:#666;	
+														{/if}' 
+										>{$k}
+										</span>
+										<div class = 'hot-title'>{$hots['title']}</div>
+										<div  class = 'hot-love'>
+											<span class = 'glyphicon glyphicon-heart-empty' style = 'color:pink'></span>
+											<span style = 'color:pink'>29喜欢</span>
+										<div>
+									</li>
+								{/volist}
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -246,7 +357,9 @@
 								</div>
 								<div class = 'list-body'>
 									<div class="list-body-left">
-										<img src="{$lists['img']}" alt="" class = 'img-responsive'>
+										<div class="list-body-left-img">
+											<img src="{$lists['img']}" alt=""  class = ''>
+										</div>
 									</div>
 									<div class="list-body-right">
 										{$lists['brief']}
@@ -254,25 +367,25 @@
 								</div>
 								<div class="list-bottom">
 									<a  class = 'list-bottom-div'>
-										<span class = 'glyphicon glyphicon-heart' style = 'color:pink'></span>
+										<span class = 'glyphicon glyphicon-heart-empty' style = 'color:pink'></span>
 										<span style = 'color:pink'>29喜欢</span>
-									<a>
+									</a>
 									<a  class = 'list-bottom-div'>
-										<span class = 'glyphicon glyphicon-time' ></span>
-										<span>2018-07-18</span>
-									<a>
-									<a  class = 'list-bottom-div'>
-										<span class = 'glyphicon glyphicon-eye-open' ></span>
-										<span>20浏览</span>
-									<a>
+										<span  style = 'color:#999' class = 'glyphicon glyphicon-time' ></span>
+										<span style = 'color:#999' >{$lists['start_time']}</span>
+									</a>
+									<a  class = 'list-bottom-div'  style = 'color:#666'>
+										<span  style = 'color:#999' class = 'glyphicon glyphicon-eye-open'></span>
+										<span  style = 'color:#999'>20浏览</span>
+									</a>
 									<a  class = 'list-bottom-div'>
 										<span class = 'glyphicon glyphicon-comment' ></span>
 										<span>20评论</span>
-									<a>
-									<a  class = 'list-bottom-div'>
+									</a>
+									<div  class = 'list-bottom-div'>
 										<span class = 'glyphicon glyphicon-user' ></span>
 										<span>萌小怪</span>
-									<a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -281,20 +394,23 @@
 			{/volist}
 		</div>
 		<div class="col-sm-3 col-xs-12" >
-			<div class="row">
-				<div class="col-sm-12 col-xs-0" style = 'height:50px;background-color: red;'>
-					
+			<div class="row iphone-code" >
+				<div class="col-sm-12 col-xs-0" style = ''>
+					<i class="fa fa-weixin" aria-hidden="true"></i>
+					<i class="fa fa-qq" aria-hidden="true" style = 'background: #0085f9'></i>
+					<i class="fa fa-weibo" aria-hidden="true" style = 'background: #f78585'></i>
+					<i class="fa fa-envelope-o" aria-hidden="true" style = 'background-color: #FF8247'></i>
 				</div>
 			</div>			
-			<div class="row" style = 'background-color: #36c;margin-top:10px;margin-bottom:10px;'>
+			<div class="row" style = 'background-color: #fff;margin-top:10px;margin-bottom:10px;'>
 				<div class="col-sm-12 col-xs-12" style = 'padding:10px;'>
-					<div style = 'width:100%;height:500px;background-color: red;'>
+					<div style = 'width:100%;height:500px;'>
 
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-12 col-xs-12" style = 'height:150px;background-color: #69c;'>
+				<div class="col-sm-12 col-xs-12" style = 'height:150px;background-color: #fff;'>
 					
 				</div>	
 			</div>	
@@ -302,12 +418,17 @@
 	</div>
 </div>
 
-<div style = 'height:100px;width:100%;;border-top:3px solid #f38484;background:#333;color:#ccc;text-align:center;line-height:100px;'>
+<div class = 'bottom'>
 	李俊荣 版权所有丨基于 Bootstrap 构建 &copy; 2018丨托管于 腾讯云主机 丨粤ICP备18044128号-1
 </div>
 </body>
 <script src = 'https://code.jquery.com/jquery.js'></script>
 <script src = '/public/static/index/js/bootstrap.min.js'></script>
 <script>
+	$('.list-body-left').hover(function(){
+		$(this).find('img').stop().animate({width: '130%',height:'130%',left:'-5%',top:'-5%'}, 800);
+	},function(){
+		$(this).find('img').stop().animate({width: '100%',height:'100%',left:'0%',top:'0%'}, 800);
+	});
 </script>
 </html>
