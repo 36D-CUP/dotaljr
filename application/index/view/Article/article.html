@@ -1,0 +1,41 @@
+{extend name='IndexPublic:index'}
+{block name='body'}
+<div class="row">
+	<div class="col-sm-12" style = ''>
+		<div style = 'background: #fff '>
+			<div style ='min-height:40px;font-size: 28px;line-height: 40px;padding: 15px 15px 0; '>{$article['title']}</div>
+			<div style = 'overflow: hidden;padding:10px 15px 15px;border-bottom:1px solid #f0f0f0;'>
+				<div class="list-bottom" style='float:left'>
+				<a  class = 'list-bottom-div'>
+					<span class = 'glyphicon glyphicon-heart-empty' style = 'color:pink'></span>
+					<span style = 'color:pink'>29喜欢</span>
+				</a>
+				<a  class = 'list-bottom-div'>
+					<span  style = 'color:#999' class = 'glyphicon glyphicon-time' ></span>
+					<span style = 'color:#999' >{$article['start_time']}</span>
+				</a>
+				<a  class = 'list-bottom-div'  style = 'color:#666'>
+					<span  style = 'color:#999' class = 'glyphicon glyphicon-eye-open'></span>
+					<span  style = 'color:#999'>20浏览</span>
+				</a>
+				<a  class = 'list-bottom-div'>
+					<span class = 'glyphicon glyphicon-comment' ></span>
+					<span>20评论</span>
+				</a>
+				<div  class = 'list-bottom-div'>
+					<span class = 'glyphicon glyphicon-user' ></span>
+					<span>萌小怪</span>
+				</div>
+			</div>
+			</div>
+		</div>
+		<div style = 'background:  #fff;padding: 10px 0;border-bottom:1px solid #f0f0f0;'>
+			<img src="/public/static/index/images/6.jpg" alt="" style = 'width: 100%'>
+		</div>
+		<div style = 'background:  #fff;padding: 10px 10px;'>
+			{$article['content']}
+		</div>
+	</div>
+</div>	
+{/block}
+

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="baidu-site-verification" content="o7i9myZJ23" />
+	<link rel="icon" href="/public/static/logo/logo.png" type="image/x-icon"/>
+	<meta name="description" content="个人博客,萌小怪,技术交流,PHP,小程序,js">
+	<meta name="Keywords" content="个人博客,萌小怪,技术交流,PHP,小程序,js">
+	<meta name = 'viewport' content='width=device-width, initial-scale=1.0'>
+	<link rel="stylesheet" href="/public/static/index/css/bootstrap.css">
+	<link rel="stylesheet" href="/public/static/index/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/public/static/index/css/my.css">
+	<meta http-equiv=Content-Language content=zh-cn> 
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312"> 
+	<meta name="description" content="萌小怪博客-勤记录 懂分享"> 
+
+
+	<title>萌小怪博客</title>
+	<style>
+
+	</style>
+</head>
+<body>
+<div class = 'head'>
+	萌小怪个人博客
+
+</div>
+<nav class="navbar navbar-default" style = ''>
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" style = '
+      ' data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">小怪博客</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">主页 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">生活笔记</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">技术文章 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">原创</a></li>
+            <li><a href="#">装载</a></li>
+<!--             <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">One more separated link</a></li> -->
+          </ul>
+        </li>
+        <li><a href="#">个人简历</a></li>
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container" style = 'line-height: 35px;'>
+	<div class="row" style ='background-color: #fff;height: 35px;'>
+		<div class="col-sm-10">
+			<span class = 'glyphicon glyphicon-bullhorn'></span>
+			<span style = 'margin-left: 10px;'>网站还在装修中,敬请期待~~~~~~~~~~~~</span>
+		</div>
+		<div class="col-sm-2">
+			<a href="#" class="login"><span class = 'glyphicon glyphicon-user' style = 'margin-right:3px '></span>注册</a>
+			<a href="#" class='login'><span class = 'glyphicon glyphicon-off' style = 'margin-right:3px '></span>登录</a>
+		</div>
+	</div>
+</div>
+<div class="container" style = 'margin-top:10px;'>
+	<div class="row">
+		<div class="col-sm-9 col-xs-12" style ='margin-bottom: 10px;'>
+			{block name='body'}
+			{/block}
+		</div>
+		<div class="col-sm-3 col-xs-12 body_right" >
+			<div class="row iphone-code" >
+				<div class="col-sm-12 col-xs-0" style = ''>
+					<i class="fa fa-weixin" aria-hidden="true"></i>
+					<i class="fa fa-qq" aria-hidden="true" style = 'background: #0085f9'></i>
+					<i class="fa fa-weibo" aria-hidden="true" style = 'background: #f78585'></i>
+					<i class="fa fa-envelope-o" aria-hidden="true" style = 'background-color: #FF8247'></i>
+				</div>
+			</div>			
+			<div class="row" style = 'background-color: #fff;'>
+				<div class="col-sm-12 col-xs-12" style = 'padding:10px;'>
+					<div class = 'gg'>
+						<div class = 'gg_head'>
+							本站公告
+						</div>
+						<div class="gg_body">
+							心情不好,不發表
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-xs-12 right_ad">
+					
+				</div>	
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-xs-12 right_bq">
+					<div class="right_bq_head">标签</div>
+					<div class="right_bq_body">
+						<ul>
+							{volist name='ico' id='icos'  key='k'}
+								<li >{$icos.name}</li>
+							{/volist}
+						</ul>
+					</div>
+				</div>	
+			</div>	
+		</div>
+	</div>
+</div>
+
+
+<div class = 'bottom'>
+	李俊荣 版权所有丨基于 Bootstrap 构建 &copy; 2018丨托管于 腾讯云主机 丨粤ICP备18044128号
+	友情链接:<a href = 'http://www.phpcp.cn' target="_blank" style = 'color:#fff'>链接</a>
+</div>
+</body>
+<script src = 'https://code.jquery.com/jquery.js'></script>
+<script src = '/public/static/index/js/bootstrap.min.js'></script>
+<script>
+	$('.list-body-left').hover(function(){
+		$(this).find('img').stop().animate({width: '130%',height:'130%',left:'-5%',top:'-5%'}, 800);
+	},function(){
+		$(this).find('img').stop().animate({width: '100%',height:'100%',left:'0%',top:'0%'}, 800);
+	});
+</script>
+</html>

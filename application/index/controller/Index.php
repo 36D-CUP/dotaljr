@@ -5,10 +5,11 @@ use app\index\controller\Allow;
 use think\Db;
 class Index extends Allow
 {
-    public function getIndex()
+    public function Index()
     {
     	$table = 'my_article';
-    	$data = Db::table('my_article')->order('start_time desc')->where('status','1')->select();
+    	$data = Db::table('my_article')->field('id,title,uid,brief,start_time,top')->order('start_time desc')->where('status','1')->select();
+    	$icos  = Db::table('my_article_ico')->order('sort desc')->select();
 
     	$hot = array();		//置顶数据
 		//组合数据
@@ -16,7 +17,9 @@ class Index extends Allow
 		for($i = 0 ; $i<count($data) ; $i++){
 			//置顶数据
 			if($data[$i]['top'] == '1'){
-				$hot[] = $data[$i];
+				if($i<=5){
+					$hot[] = $data[$i];
+				}
 			}
 
 			$ico  = Db::table('my_article_ico_c')->where('aid',$data[$i]['id'])->select();						//获取此文章所有标签
@@ -37,6 +40,7 @@ class Index extends Allow
 			$data[$i]['start_time'] = date('Y-m-d',$data[$i]['start_time']);
 		}
 		$row['hot'] = $hot;
+		$row['ico'] = $icos;
 		$row['list'] = $data;
         return $this->fetch('Index/index',$row);
     }
