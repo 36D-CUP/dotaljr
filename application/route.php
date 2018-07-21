@@ -32,3 +32,5 @@ Route::Controller('/articleico',"admin/Articleico");		//后台文章
 Route::get('/',"index/Index/index");		//前台首页
 
 Route::Controller('/indexarticle',"index/Article");		//前台文章详情
+
+Route::Controller('/fun',"index/Index");		//前台文章详情

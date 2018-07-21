@@ -8,7 +8,6 @@
 					    <ol class="carousel-indicators">
 					        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 					        <li data-target="#myCarousel" data-slide-to="1"></li>
-					        <li data-target="#myCarousel" data-slide-to="2"></li>
 					    </ol>   
 					    <!-- 轮播（Carousel）项目 -->
 					    <div class="carousel-inner">
@@ -58,7 +57,7 @@
 										<div class = 'hot-title'><a href="indexarticle/article/pid/{$hots.id}">{$hots['title']}</a></div>
 										<div  class = 'hot-love'>
 											<span class = 'glyphicon glyphicon-heart-empty' style = 'color:pink'></span>
-											<span style = 'color:pink'>29喜欢</span>
+											<span style = 'color:pink' class = 'love' thisID = '{$hots.id}'>{$hots['love']}喜欢</span>
 										<div>
 									</li>
 								{/volist}
@@ -91,7 +90,7 @@
 								<div class="list-bottom">
 									<a  class = 'list-bottom-div'>
 										<span class = 'glyphicon glyphicon-heart-empty' style = 'color:pink'></span>
-										<span style = 'color:pink'>29喜欢</span>
+										<span style = 'color:pink;' class = 'love'  thisID = '{$lists.id}'>{$lists['love']}喜欢</span>
 									</a>
 									<a  class = 'list-bottom-div'>
 										<span  style = 'color:#999' class = 'glyphicon glyphicon-time' ></span>
@@ -107,7 +106,7 @@
 									</a>
 									<div  class = 'list-bottom-div'>
 										<span class = 'glyphicon glyphicon-user' ></span>
-										<span>萌小怪</span>
+										<span>{$lists['admin_name']}</span>
 									</div>
 								</div>
 							</div>
@@ -115,7 +114,21 @@
 					</div>
 				</div>
 			{/volist}
+<script src = 'https://code.jquery.com/jquery.js'></script>
 
-
+<script>
+$('.love').click(function(){
+	var aid = $(this).attr('thisID');
+	var uid = '1';
+	var thi = $(this);
+	$.post('fun/love',{aid:aid,uid:uid},function(data){
+		if(data == 'no'){
+			alert('你已喜欢过了~');
+		}else{
+			thi.html(data+"喜欢");
+		}
+	});
+});
+</script>
 {/block}
 

@@ -13,6 +13,7 @@ class Article extends Allow
     	$where['status'] = 1;
     	$where['id'] 	 = $id;
     	$data = Db::table('my_article')->field('id,title,uid,content,start_time')->order('start_time desc')->where($where)->find();
+        $data['admin_name']        = Db::table('my_admin')->where('id',$data['uid'])->find()['admin_name'];
 
     	//获取标签
     	$icos  = Db::table('my_article_ico')->order('sort desc')->select();
