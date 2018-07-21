@@ -19,6 +19,8 @@ class Index extends Allow
 
 			//获取喜欢数
 			$data[$i]['love'] = Db::table('my_article_love')->where('aid',$data[$i]['id'])->count();
+			//获取阅读数
+			$data[$i]['read'] = Db::table('my_article_read')->where('aid',$data[$i]['id'])->count();
 
 			//置顶数据
 			if($data[$i]['top'] == '1'){
