@@ -20,6 +20,7 @@
 
 	</style>
 </head>
+<script src = 'https://code.jquery.com/jquery.js'></script>
 <body>
 <div class = 'head'>
 	萌小怪个人博客
@@ -42,13 +43,13 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">主页 <span class="sr-only">(current)</span></a></li>
+        <li {if condition="(empty($glo.tid))"}class="active"{/if}><a href="/">主页 <span class="sr-only">(current)</span></a></li>
         <li><a href="#">生活笔记</a></li>
-        <li class="dropdown">
+        <li class="{if condition='(!empty($glo.tid))'}active{/if} dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">技术文章 <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">原创</a></li>
-            <li><a href="#">装载</a></li>
+            <li><a href="/indexarticle/articlelist/tid/1">原创</a></li>
+            <li><a href="/indexarticle/articlelist/tid/2">装载</a></li>
 <!--             <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">Separated link</a></li>
@@ -131,7 +132,7 @@
 					<div class="right_bq_body">
 						<ul>
 							{volist name='glo.ico' id='icos'  key='k'}
-								<li >{$icos.name}</li>
+								<li ><a href="/indexarticle/articlelist/iid/{$icos.id}" style = 'color:#fff;display: block'>{$icos.name}</a></li>
 							{/volist}
 						</ul>
 					</div>
@@ -147,7 +148,6 @@
 	友情链接:<a href = 'http://www.phpcp.cn' target="_blank" style = 'color:#fff'>链接</a>
 </div>
 </body>
-<script src = 'https://code.jquery.com/jquery.js'></script>
 <script src = '/public/static/index/js/bootstrap.min.js'></script>
 <script>
 	$('.list-body-left').hover(function(){

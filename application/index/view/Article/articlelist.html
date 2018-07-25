@@ -1,0 +1,72 @@
+{extend name='IndexPublic:index'}
+{block name='body'}
+			{volist name='list' id='lists'}
+				<div class="row" >
+					<div class="col-sm-12 my-width" >
+						<div class = 'x-list'>
+							<div class="x-list-c">
+								<div class = 'list-head'>
+									<span class = 'list-head-ico'>最新</span>
+									<a href="/indexarticle/article/pid/{$lists.id}/tid/3">
+										{$lists['title']}
+									</a>
+								</div>
+								<div class = 'list-body'>
+									<div class="list-body-left">
+										<div class="list-body-left-img">
+											<img src="{$lists['img']}" alt=""  class = ''>
+										</div>
+									</div>
+									<div class="list-body-right">
+										{$lists['brief']}
+									</div>
+								</div>
+								<div class="list-bottom">
+									<a  class = 'list-bottom-div'>
+										<span class = 'glyphicon glyphicon-heart-empty' style = 'color:pink'></span>
+										<span style = 'color:pink;' class = 'love'  thisID = '{$lists.id}'>{$lists['love']}喜欢</span>
+									</a>
+									<a  class = 'list-bottom-div'>
+										<span  style = 'color:#999' class = 'glyphicon glyphicon-time' ></span>
+										<span style = 'color:#999' >{$lists['start_time']}</span>
+									</a>
+									<a  class = 'list-bottom-div'  style = 'color:#666'>
+										<span  style = 'color:#999' class = 'glyphicon glyphicon-eye-open'></span>
+										<span  style = 'color:#999'>{$lists['read']}浏览</span>
+									</a>
+									<a  class = 'list-bottom-div'>
+										<span class = 'glyphicon glyphicon-comment' ></span>
+										<span>20评论</span>
+									</a>
+									<div  class = 'list-bottom-div'>
+										<span class = 'glyphicon glyphicon-user' ></span>
+										<span>{$lists['admin_name']}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/volist}
+
+<script>
+$('.love').click(function(){
+	var aid = $(this).attr('thisID');
+	var uid = '{$Think.session.user_id}';
+	var thi = $(this);
+	if(uid.length==0){
+		alert('请先登录~~~');
+	}else{
+		$.post('/fun/love',{aid:aid,uid:uid},function(data){
+			if(data == 'no'){
+				alert('你已喜欢过了~');
+			}else{
+				thi.html(data+"喜欢");
+			}
+		});
+		
+	}
+});
+</script>
+{/block}
+

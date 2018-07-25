@@ -16,6 +16,13 @@ Class Allow extends Controller
         // $glo['user']['id'] = Session::get('user_id');
         // $glo['user']['name'] = Session::get('user_name');
 
+        $tid = input('tid'); //分类文章
+        $iid = input('iid'); //标签文章
+
+        if($tid || $iid){
+            $glo['tid'] = "1";
+        }
+
 		//获取公告
     	$notice    = Db::table('my_notice')->where('status','1')->select();	//全局头部
     	foreach($notice as $v){
@@ -29,7 +36,6 @@ Class Allow extends Controller
     	$icos  = Db::table('my_article_ico')->order('sort desc')->select();
 		$glo['ico'] 	= $icos;		//获取标签
 		$glo['article'] = $data;		//获取文章内容
-		
     	$this->assign('glo',$glo);
 
 	}
