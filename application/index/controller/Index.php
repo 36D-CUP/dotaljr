@@ -3,14 +3,17 @@ namespace app\index\controller;
 
 use app\index\controller\Allow;
 use think\Db;
+use think\Session;
+
 class Index extends Allow
 {
     public function Index()
     {
     	$table = 'my_article';
-    	$data = Db::table('my_article')->field('id,title,uid,brief,start_time,top')->order('start_time desc')->where('status','1')->select();
+    	$data = Db::table('my_article')->field('id,title,uid,brief,start_time,top,read')->order('start_time desc')->where('status','1')->select();
 
-    	$icos  = Db::table('my_article_ico')->order('sort desc')->select();
+    	// dump(Session::get());
+    	// exit;
 
     	$hot = array();		//置顶数据
 		//组合数据
@@ -19,8 +22,7 @@ class Index extends Allow
 
 			//获取喜欢数
 			$data[$i]['love'] = Db::table('my_article_love')->where('aid',$data[$i]['id'])->count();
-			//获取阅读数
-			$data[$i]['read'] = Db::table('my_article_read')->where('aid',$data[$i]['id'])->count();
+
 
 			//置顶数据
 			if($data[$i]['top'] == '1'){

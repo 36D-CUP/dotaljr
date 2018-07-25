@@ -51,7 +51,7 @@ Class Articleico extends Allow
 		$arr['empty']      = "<tr><td colspan='6' style='text-align:center'>没有任何数据</td></tr>";		//显示条数
 		$arr['title']	   = '文章管理';
 		$arr['title_txt']  = '文章标签列表';
-		return $this->fetch('articleico/articleico',$arr);
+		return $this->fetch('Articleico/articleico',$arr);
 	}
 
 

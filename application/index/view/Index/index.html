@@ -119,15 +119,20 @@
 <script>
 $('.love').click(function(){
 	var aid = $(this).attr('thisID');
-	var uid = '1';
+	var uid = '{$Think.session.user_id}';
 	var thi = $(this);
-	$.post('fun/love',{aid:aid,uid:uid},function(data){
-		if(data == 'no'){
-			alert('你已喜欢过了~');
-		}else{
-			thi.html(data+"喜欢");
-		}
-	});
+	if(uid.length==0){
+		alert('请先登录~~~');
+	}else{
+		$.post('fun/love',{aid:aid,uid:uid},function(data){
+			if(data == 'no'){
+				alert('你已喜欢过了~');
+			}else{
+				thi.html(data+"喜欢");
+			}
+		});
+		
+	}
 });
 </script>
 {/block}

@@ -148,7 +148,7 @@ Class Article extends Allow
 		$arr['table']      = 'my_article';																	//模板上使用
 		$arr['tables']     = 'article';																		//模板上使用
 		$arr['title']	   = '文章管理';
-		return $this->fetch('article/articleadd',$arr);
+		return $this->fetch('Article/articleadd',$arr);
 	}
 
 	//管理员添加与修改功能

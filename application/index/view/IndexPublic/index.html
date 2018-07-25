@@ -65,13 +65,19 @@
 
 <div class="container" style = 'line-height: 35px;'>
 	<div class="row" style ='background-color: #fff;height: 35px;'>
-		<div class="col-sm-10">
-			<span class = 'glyphicon glyphicon-bullhorn'></span>
-			<span style = 'margin-left: 10px;'>网站还在装修中,敬请期待~~~~~~~~~~~~</span>
+		<div class="col-sm-10" style = 'position: relative;'>
+			<span class = 'glyphicon glyphicon-bullhorn' ></span>
+			<span style = 'margin-left: 10px;'>{$glo['notice']['notice_top']}</span>
 		</div>
 		<div class="col-sm-2">
-			<a href="#" class="login"><span class = 'glyphicon glyphicon-user' style = 'margin-right:3px '></span>注册</a>
-			<a href="#" class='login'><span class = 'glyphicon glyphicon-off' style = 'margin-right:3px '></span>登录</a>
+			{if condition="(empty($Think.session.user_name))"}
+			<a href="#" class="login"><span class = 'glyphicon glyphicon-off' style = 'margin-right:5px '></span>注册</a>
+			<a href="/login/login" class='login'><span class = 'glyphicon glyphicon-user' style = 'margin-right:5px '>登录</a>
+			{else/}
+			<a href="#" id = 'loginout' class="login"><span class = 'glyphicon glyphicon-off' style = 'margin-right:5px '></span>退出</a>
+			<a href="#" class='login'><span class = 'glyphicon glyphicon-user' style = 'margin-right:5px '></span>{$Think.session.user_name}</a>
+			
+			{/if}
 		</div>
 	</div>
 </div>
@@ -83,11 +89,25 @@
 		</div>
 		<div class="col-sm-3 col-xs-12 body_right" >
 			<div class="row iphone-code" >
-				<div class="col-sm-12 col-xs-0" style = ''>
-					<i class="fa fa-weixin" aria-hidden="true"></i>
-					<i class="fa fa-qq" aria-hidden="true" style = 'background: #0085f9'></i>
-					<i class="fa fa-weibo" aria-hidden="true" style = 'background: #f78585'></i>
-					<i class="fa fa-envelope-o" aria-hidden="true" style = 'background-color: #FF8247'></i>
+				<div class="col-sm-12 col-xs-0" style = 'position: relative;' id = 'code'>
+					<i class="fa fa-weixin" name = 'wx' aria-hidden="true" style = 'position: relative'>
+					</i>
+					<div class="wx_code" style = ''>
+						<img src="/public/static/logo/wx.jpg" alt="">
+					</div>
+					<i class="fa fa-qq" name = 'qq' aria-hidden="true" style = 'background: #0085f9;'>
+					</i>
+					<div class="qq_code" style = ''>
+						<img src="/public/static/logo/qq.jpg" alt="">
+					</div>
+					<i class="fa fa-weibo" name = 'wb' aria-hidden="true" style = 'background: #f78585'></i>
+					<div class="wb_code" style = ''>
+						<img src="/public/static/logo/wb.jpg" alt="">
+					</div>
+					<i class="fa fa-envelope-o" name = 'yx' aria-hidden="true" style = 'background-color: #FF8247'></i>
+					<div class="yx_code" style = ''>
+						<img src="/public/static/logo/yx.jpg" alt="">
+					</div>
 				</div>
 			</div>			
 			<div class="row" style = 'background-color: #fff;'>
@@ -97,7 +117,7 @@
 							本站公告
 						</div>
 						<div class="gg_body">
-							心情不好,不發表
+							{$glo['notice']['notice_right']}
 						</div>
 					</div>
 				</div>
@@ -110,7 +130,7 @@
 					<div class="right_bq_head">标签</div>
 					<div class="right_bq_body">
 						<ul>
-							{volist name='ico' id='icos'  key='k'}
+							{volist name='glo.ico' id='icos'  key='k'}
 								<li >{$icos.name}</li>
 							{/volist}
 						</ul>
@@ -134,6 +154,37 @@
 		$(this).find('img').stop().animate({width: '130%',height:'130%',left:'-5%',top:'-5%'}, 800);
 	},function(){
 		$(this).find('img').stop().animate({width: '100%',height:'100%',left:'0%',top:'0%'}, 800);
+	});
+
+	$('#loginout').click(function(){
+		$.post('/login/loginout',function(data){
+			// alert('退出成功');
+			if(data == '1'){
+						window.location.href='/';
+			}
+		});
+	});
+
+	$('.fa').hover(function(){
+		if($(this).attr('name') == 'wx'){
+			$('.wx_code').stop().animate({height:'300px',top:'60px'}, 600);
+		}else if($(this).attr('name') == 'qq'){
+			$('.qq_code').stop().animate({height:'300px',top:'60px'}, 600);
+		}else if($(this).attr('name') == 'wb'){
+			$('.wb_code').stop().animate({height:'300px',top:'60px'}, 600);
+		}else if($(this).attr('name') == 'yx'){
+			$('.yx_code').stop().animate({height:'300px',top:'60px'}, 600);
+		}
+	},function(){
+		if($(this).attr('name') == 'wx'){
+			$('.wx_code').stop().animate({height:'0',top:'60px'}, 600);
+		}else if($(this).attr('name') == 'qq'){
+			$('.qq_code').stop().animate({height:'0	',top:'60px'}, 600);
+		}else if($(this).attr('name') == 'wb'){
+			$('.wb_code').stop().animate({height:'0	',top:'60px'}, 600);
+		}else if($(this).attr('name') == 'yx'){
+			$('.yx_code').stop().animate({height:'0	',top:'60px'}, 600);
+		}
 	});
 </script>
 </html>

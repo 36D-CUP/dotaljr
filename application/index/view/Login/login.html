@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<title>login</title>
+<link rel="stylesheet" type="text/css" href="/public/static/login/css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="/public/static/login/css/demo.css" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="/public/static/login/css/component.css" />
+<!--[if IE]>
+<script src="js/html5.js"></script>
+<![endif]-->
+<style>
+	.input_outer{
+	}
+	.mb2 a{
+		display: block;
+		text-align: center;
+		border-radius: 5px;
+		padding:15px 20px;
+		color:rgba(255,255,255,0.8);
+		border:2px solid rgba(255,255,255,0.6);
+		background: rgba(0,0,0,0.5);
+		transition: 0.5s;
+
+	}
+	.mb2 a:hover{
+		color:rgba(255,255,255,1);
+		border:2px solid rgba(255,255,255,0.8);
+		background: rgba(0,0,0,0.1);
+	}
+</style>
+</head>
+<body >
+		<div class="container demo-1">
+			<div class="content">
+				<div id="large-header"	 class="large-header" >
+					<canvas id="demo-canvas"></canvas>
+		
+					<div class="logo_box" style = 'background: rgba(0,0,0,0.4);border-radius:10px;box-shadow: 5px 5px 30px #000;'>
+						<h3 > 欢迎登陆</h3>
+						<form action="#" name="f" method="post">
+							<div class="input_outer">
+								<span class="u_user"></span>
+								<input name="logname" id = 'user'  class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
+							</div>
+							<div class="input_outer">
+								<span class="us_uer"></span>
+								<input name="logpass" id = 'pass' class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;" type="password"  placeholder="请输入密码">
+							</div>
+							<div class="mb2">
+								<a class="" id = 'login' href="javascript:;"  style="margin-top: 80px;">登录</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div><!-- /container -->
+		<script src="/public/static/login/js/TweenLite.min.js"></script>
+		<script src="/public/static/login/js/EasePack.min.js"></script>
+
+		<script src="/public/static/login/js/rAF.js"></script>
+		<script src="/public/static/login/js/demo-1.js"></script>
+		<script src="/public/static/admin/js/jquery-1.10.2.min.js"></script>
+		<script>
+			$('#login').click(function(){
+				var user = $('#user').val();
+				var pass = $('#pass').val();
+				$.post('/login/logindo',{user:user,pass:pass},function(data){
+					if(data == '1'){
+						window.location.href='/';
+					}else{
+						alert(data);
+					}
+				})
+			});
+
+			//绑定回车enter键,触发点击事件
+$(document).keydown(function(e){
+    var e = e||event;
+    if(e.keyCode == 13){
+        $("#login").trigger("click");                  //触发点击事件
+    }
+});
+		</script>
+	</body>
+</html>
